@@ -11,6 +11,9 @@ namespace TaskManagementApp.Models
         public string Email { get; set; }
         public string PasswordHash { get; set; }
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+        public DateTime LastModifiedAt { get; set; }
+
+        public bool IsDelete { get; set; } = false;
         public List<TaskItem> Tasks { get; set; }
     }
 }

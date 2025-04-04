@@ -33,6 +33,13 @@ namespace TaskManagementApp.Data
                 .WithOne(c => c.TaskItem)
                 .HasForeignKey(c => c.TaskitemId)
                 .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<TaskItem>()
+                .Property(t => t.Status)
+                .HasConversion<string>();
+
+            modelBuilder.Entity<TaskItem>()
+                .HasQueryFilter(t => !t.IsDeleted);
         }
     }
 }
