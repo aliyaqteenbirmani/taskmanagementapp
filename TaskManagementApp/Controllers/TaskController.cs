@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using TaskManagementApp.Repositories.Contracts;
 
 namespace TaskManagementApp.Controllers
 {
@@ -7,6 +8,29 @@ namespace TaskManagementApp.Controllers
     [ApiController]
     public class TaskController : ControllerBase
     {
-        private readonly 
+        private readonly ITaskService _taskService;
+        public TaskController(ITaskService taskService)
+        {
+            _taskService = taskService;
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Post([FromBody] Task task)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest();
+            }
+            await _taskService.AddTaskAsync(task);
+            return Ok();
+        }
+
+
+        [HttpGet]
+        public async Task<IActionResult> GetAllTask()
+        {
+            var allTask = await _taskService.GetAllTasks();
+            return Ok(allTask);
+        }
     }
 }
