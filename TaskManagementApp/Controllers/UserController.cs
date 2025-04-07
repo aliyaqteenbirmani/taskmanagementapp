@@ -5,6 +5,7 @@ using System.Security.Cryptography;
 using System.Text;
 using TaskManagementApp.Models;
 using TaskManagementApp.Repositories.Contracts;
+using TaskManagementApp.Services;
 
 namespace TaskManagementApp.Controllers
 {
@@ -13,25 +14,26 @@ namespace TaskManagementApp.Controllers
     public class UserController : ControllerBase
     {
         private readonly IUserService _userService;
-        public UserController(IUserService userService)
+        private readonly TokenService _tokenService;
+        public UserController(IUserService userService, TokenService tokenService)
         {
             _userService = userService;
+            _tokenService = tokenService;
         }
 
 
         [HttpPost("login-user")]
-        public async Task<IActionResult> LoginUser(LoginDto loginDto)
+        public async Task<ActionResult<string>> LoginUser(LoginDto loginDto)
         {
             var userFromRepo = await _userService.GetUserByEmail(loginDto.Email);
             if(userFromRepo is null)
             {
                 return Unauthorized("Invalid UserName");
             }
-
             var hmac = new HMACSHA256(Encoding.UTF8.GetBytes(userFromRepo.PasswordSalt));
             var computedHashPass = hmac.ComputeHash(Encoding.UTF8.GetBytes(loginDto.Password)).ToString();
             return userFromRepo.PasswordHash == computedHashPass ? 
-                Ok("Successfully LogIn") : BadRequest("Invalid Password");
+                _tokenService.GenerateToken(userFromRepo).ToString() : BadRequest("Invalid Password");
         }
         [HttpPost("register-user")]
         public async Task<IActionResult> UserRegistration(UserDto userDto)

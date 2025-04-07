@@ -2,6 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using TaskManagementApp.Data;
 using TaskManagementApp.Repositories.Contracts;
 using TaskManagementApp.Repositories.Implementations;
+using TaskManagementApp.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -9,6 +10,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddTransient<ITaskService,TaskService>();
 builder.Services.AddTransient<IUserService,UserService>();
+builder.Services.AddScoped<TokenService>();
 builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnectionStr")));
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
