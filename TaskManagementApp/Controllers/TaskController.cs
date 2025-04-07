@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using TaskManagementApp.Models;
 using TaskManagementApp.Repositories.Contracts;
 
 namespace TaskManagementApp.Controllers
@@ -15,7 +16,7 @@ namespace TaskManagementApp.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Post([FromBody] Task task)
+        public async Task<IActionResult> Post([FromBody] TaskItem task)
         {
             if (!ModelState.IsValid)
             {

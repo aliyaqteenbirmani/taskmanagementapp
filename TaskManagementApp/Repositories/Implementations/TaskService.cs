@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using TaskManagementApp.Data;
+using TaskManagementApp.Models;
 using TaskManagementApp.Repositories.Contracts;
 
 namespace TaskManagementApp.Repositories.Implementations
@@ -11,7 +12,7 @@ namespace TaskManagementApp.Repositories.Implementations
         {
             _context = context ?? throw new ArgumentNullException();
         }
-        public async Task AddTaskAsync(Task task)
+        public async Task AddTaskAsync(TaskItem task)
         {
             await _context.AddAsync(task);
             await _context.SaveChangesAsync();
@@ -24,19 +25,19 @@ namespace TaskManagementApp.Repositories.Implementations
             await _context.SaveChangesAsync();
         }
 
-        public async Task<IEnumerable<Task>> GetAllTasks()
+        public async Task<IEnumerable<TaskItem>> GetAllTasks()
         {
             return await _context.Tasks.ToListAsync();
         }
 
-        public async Task<Task> GetTaskById(Guid id)
+        public async Task<TaskItem> GetTaskById(Guid id)
         {
             return await _context.Tasks.FindAsync(id);
         }
 
-        public async Task UpdateTaskAsync(Task task)
+        public async Task UpdateTaskAsync(TaskItem task)
         {
-            task.ModifiedDate = DateTime.UtcNow;
+
             _context.Entry(task).State = EntityState.Modified;
             await _context.SaveChangesAsync();
         }
