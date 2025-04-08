@@ -4,7 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { UserRegisterComponent } from './core/user-register/user-register.component';
 @Component({
   selector: 'app-root',
-  imports: [FormsModule,UserRegisterComponent],
+  imports: [FormsModule, RouterOutlet],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })

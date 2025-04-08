@@ -5,44 +5,55 @@ import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 
-
 @Component({
   selector: 'app-user-register',
   standalone: true,
-  imports:[FormsModule,CommonModule],
+  imports: [FormsModule, CommonModule],
   templateUrl: './user-register.component.html',
   styleUrls: ['./user-register.component.css']
 })
 export class UserRegisterComponent {
-  user: User={
+  user: User = {
     fullName: '',
     email: '',
     password: '',
-    confirmPassword:''
+    confirmPassword: ''
   };
+  passwordMismatch: boolean = false;
+  isLoading: boolean = false;
+  errorMessage: string = '';
 
-  constructor(private authService: AuthService, private router:Router){}
+  constructor(private authService: AuthService, private router: Router) {}
 
   registerUser(): void {
-    if (this.user.password === this.user.confirmPassword) {
-      this.authService.register(this.user).subscribe({
-        next: (response) => {
-          console.log('Registration successful', response);
-          // Redirect user to login page after successful registration
-          this.router.navigate(['/login']);
-        },
-        error: (err) => {
-          console.error('Error occurred during registration', err);
-          alert('Registration failed. Please try again.');
-        }
-      });
-    } else {
-      alert('Passwords do not match');
+    this.passwordMismatch = false;
+    this.errorMessage = ''; // Reset error state
+    if (this.user.password !== this.user.confirmPassword) {
+      this.passwordMismatch = true;
+      return;
     }
+
+    this.isLoading = true; // Start loading
+    this.authService.register(this.user).subscribe({
+      next: (response) => {
+        alert('Registration successful');
+        // this.router.navigate(['/login']);
+      },
+      error: (err) => {
+        console.error('Error occurred during registration', err);
+        this.errorMessage = err.error?.message || 'Registration failed. Please try again.';
+      },
+      complete: () => {
+        this.isLoading = false; // Stop loading
+      }
+    });
   }
 
-  // onSubmit() {
-  //   console.log('User Registered:', this.user);
-  //   // In the future, this will call the registration service.
-  // }
+  // Optional: Reset form if you ever need it
+  resetForm(): void {
+    this.user = { fullName: '', email: '', password: '', confirmPassword: '' };
+    this.passwordMismatch = false;
+    this.errorMessage = '';
+    this.isLoading = false;
+  }
 }

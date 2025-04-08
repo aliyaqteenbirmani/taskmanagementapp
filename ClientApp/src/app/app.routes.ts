@@ -1,12 +1,10 @@
 import { Routes } from '@angular/router';
 import { UserRegisterComponent } from './core/user-register/user-register.component';
-import { UserLoginComponent } from './core/user-login/user-login.component';
-import { AuthGuard } from './auth.guard';  // Import the AuthGuard
+// import { LoginComponent } from './core/user-login/user-login.component';
 
-export const appRoutes: Routes = [
-  { path: 'register', component: UserRegisterComponent },
-  { path: 'login', component: UserLoginComponent },
-  
-  // You can add more routes and protect them using the AuthGuard
-  { path: '', redirectTo: '/login', pathMatch: 'full' }
+export const routes: Routes = [
+  // { path: 'login', component: LoginComponent },
+  { path: 'register', component: UserRegisterComponent }, // <- Changed this line
+  // { path: 'dashboard', component: DashboardComponent },
+  { path: '', redirectTo: '/register', pathMatch: 'full' }
 ];

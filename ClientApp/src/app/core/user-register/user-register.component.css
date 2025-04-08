@@ -1,0 +1,105 @@
+/* Apply the background to the entire page */
+body {
+  background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%); /* Warm gradient: soft peach to coral */
+  min-height: 100vh; /* Ensures the background covers the full viewport */
+  margin: 0; /* Removes default margin */
+  display: flex;
+  justify-content: center;
+  align-items: center; /* Centers the form vertically */
+}
+
+/* Container styling (form background remains white for contrast) */
+.container {
+  max-width: 500px;
+  margin: 20px auto; /* Adds some margin for spacing */
+  padding: 20px;
+  background: rgba(255, 255, 255, 0.9); /* Slightly translucent white for a soft effect */
+  border-radius: 8px; /* Rounded corners for the form */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+
+}
+
+/* Heading styling */
+h2 {
+  text-align: center;
+  margin-bottom: 20px;
+  color: #333;
+  font-weight: 600;
+}
+
+/* Form group spacing */
+.form-group {
+  margin-bottom: 15px;
+  margin-right: 15px;
+}
+
+/* Label styling */
+label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: 500;
+  color: #555;
+}
+
+/* Input field styling */
+.form-control {
+  width: 100%;
+  padding: 10px;
+  font-size: 1em;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  transition: border-color 0.3s ease;
+}
+
+/* Input focus state */
+.form-control:focus {
+  border-color: #ff6f61; /* Coral color to match the background theme */
+  outline: none;
+  box-shadow: 0 0 5px rgba(255, 111, 97, 0.3);
+}
+
+/* Error message styling */
+.error-message {
+  color: #dc3545;
+  font-size: 0.9em;
+  margin-top: 5px;
+  margin-bottom: 10px;
+  font-style: italic;
+}
+
+/* Button styling */
+.btn-primary {
+  width: 50%;
+  padding: 12px 24px;
+  font-size: 1.1em;
+  background-color: #ff6f61; /* Coral button to match the theme */
+  border: none;
+  border-radius: 15px;
+  transition: background-color 0.3s ease;
+  cursor: pointer;
+  margin-left: 25%;
+}
+
+
+/* Button hover state */
+.btn-primary:hover:not(:disabled) {
+  background-color: #e65b50; /* Darker coral on hover */
+}
+
+/* Button disabled state */
+.btn-primary:disabled {
+  background-color: #6c757d;
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+
+
+/* Responsive adjustments */
+@media (max-width: 576px) {
+  .container {
+    padding: 15px;
+  }
+  .btn-primary {
+    padding: 10px;
+  }
+}
