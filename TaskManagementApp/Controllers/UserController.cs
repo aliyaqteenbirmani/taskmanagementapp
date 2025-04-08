@@ -23,7 +23,7 @@ namespace TaskManagementApp.Controllers
 
 
         [HttpPost("login-user")]
-        public async Task<ActionResult<string>> LoginUser(LoginDto loginDto)
+        public async Task<ActionResult<ResponseBody>> LoginUser(LoginDto loginDto)
         {
             var userFromRepo = await _userService.GetUserByEmail(loginDto.Email);
             if(userFromRepo is null)
@@ -32,8 +32,15 @@ namespace TaskManagementApp.Controllers
             }
             var hmac = new HMACSHA256(Encoding.UTF8.GetBytes(userFromRepo.PasswordSalt));
             var computedHashPass = hmac.ComputeHash(Encoding.UTF8.GetBytes(loginDto.Password)).ToString();
+            var token =  _tokenService.GenerateToken(userFromRepo);
+            var responseBody = new ResponseBody
+            {
+                Name = userFromRepo.FullName,
+                Token = token
+            };
+
             return userFromRepo.PasswordHash == computedHashPass ? 
-                _tokenService.GenerateToken(userFromRepo).ToString() : BadRequest("Invalid Password");
+                Ok(responseBody) : BadRequest("Invalid Password");
         }
         [HttpPost("register-user")]
         public async Task<IActionResult> UserRegistration(UserDto userDto)
@@ -61,7 +68,7 @@ namespace TaskManagementApp.Controllers
             };
 
             await _userService.RegisterUser(user);
-            return Ok("User is registered successfully.");
+            return Ok( new {message = "User is registered successfully." });
         }
 
         [HttpGet]
