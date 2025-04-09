@@ -37,7 +37,7 @@ export class UserRegisterComponent {
     this.authService.register(this.user).subscribe({
       next: (response) => {
         alert('Registration successful');
-        // this.router.navigate(['/login']);
+        this.router.navigate(['/login']);
       },
       error: (err) => {
         console.error('Error occurred during registration', err);

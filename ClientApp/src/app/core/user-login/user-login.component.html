@@ -1,0 +1,51 @@
+<div class="container">
+    <h2>Login</h2>
+    <form (ngSubmit)="loginUser()">
+      <!-- Email -->
+      <div class="form-group">
+        <label for="email">Email:</label>
+        <input
+          type="email"
+          id="email"
+          class="form-control"
+          [(ngModel)]="loginData.email"
+          name="email"
+          required
+          aria-required="true"
+        />
+      </div>
+  
+      <!-- Password -->
+      <div class="form-group">
+        <label for="password">Password:</label>
+        <input
+          type="password"
+          id="password"
+          class="form-control"
+          [(ngModel)]="loginData.password"
+          name="password"
+          required
+          aria-required="true"
+        />
+      </div>
+  
+      <!-- Error Message -->
+      <div *ngIf="errorMessage" class="error-message" role="alert">
+        {{ errorMessage }}
+      </div>
+  
+      <!-- Submit Button -->
+      <button
+        type="submit"
+        class="btn btn-primary"
+        [disabled]="isLoading"
+      >
+        {{ isLoading ? 'Logging in...' : 'Login' }}
+      </button>
+    </form>
+  
+    <!-- Link to Register -->
+    <div class="register-link">
+      <p>Don't have an account? <a [routerLink]="['/register']">Register here</a></p>
+    </div>
+  </div>

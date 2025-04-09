@@ -1,0 +1,104 @@
+/* Container styling */
+.container {
+    max-width: 500px;
+    margin: 20px auto;
+    padding: 20px;
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Heading styling */
+  h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #333;
+    font-weight: 600;
+  }
+  
+  /* Form group spacing */
+  .form-group {
+    margin-bottom: 15px;
+  }
+  
+  /* Label styling */
+  label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: 500;
+    color: #555;
+  }
+  
+  /* Input field styling */
+  .form-control {
+    width: 100%;
+    padding: 10px;
+    font-size: 1em;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    transition: border-color 0.3s ease;
+  }
+  
+  /* Input focus state */
+  .form-control:focus {
+    border-color: #ff6f61;
+    outline: none;
+    box-shadow: 0 0 5px rgba(255, 111, 97, 0.3);
+  }
+  
+  /* Error message styling */
+  .error-message {
+    color: #dc3545;
+    font-size: 0.9em;
+    margin-top: 5px;
+    margin-bottom: 10px;
+    font-style: italic;
+  }
+  
+  /* Button styling */
+  .btn-primary {
+    width: 100%;
+    padding: 12px;
+    font-size: 1.1em;
+    background-color: #ff6f61;
+    border: none;
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
+  }
+  
+  /* Button hover state */
+  .btn-primary:hover:not(:disabled) {
+    background-color: #e65b50;
+  }
+  
+  /* Button disabled state */
+  .btn-primary:disabled {
+    background-color: #6c757d;
+    cursor: not-allowed;
+    opacity: 0.7;
+  }
+  
+  /* Register link styling */
+  .register-link {
+    text-align: center;
+    margin-top: 15px;
+  }
+  
+  .register-link a {
+    color: #ff6f61;
+    text-decoration: none;
+  }
+  
+  .register-link a:hover {
+    text-decoration: underline;
+  }
+  
+  /* Responsive adjustments */
+  @media (max-width: 576px) {
+    .container {
+      padding: 15px;
+    }
+    .btn-primary {
+      padding: 10px;
+    }
+  }

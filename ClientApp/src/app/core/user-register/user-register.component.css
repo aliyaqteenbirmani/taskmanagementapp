@@ -60,8 +60,8 @@ label {
 
 /* Error message styling */
 .error-message {
-  color: #dc3545;
-  font-size: 0.9em;
+  color: #f5f3f3;
+  font-size: 1em;
   margin-top: 5px;
   margin-bottom: 10px;
   font-style: italic;

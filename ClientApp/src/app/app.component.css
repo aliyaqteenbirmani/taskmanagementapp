@@ -3,16 +3,21 @@
     background: linear-gradient(135deg, #adf1a4 0%, #093f16 100%); /* Warm gradient: peach to coral */
     min-height: 100vh; /* Ensures the background covers the full viewport */
     margin: 0; /* Removes default margin */
-    display: flex;
-    justify-content: center;
-    align-items: center; /* Centers content vertically */
+ 
   }
   
   /* Optional: Style for any global elements like header/footer */
-  header, footer {
+  header{
     background: transparent;
     padding: 10px;
     text-align: center;
     color: #ffffff;
+    font-size: 40px;
+  }
 
+  footer {
+    background: transparent;
+    padding: 10px;
+    text-align: center;
+    color: #ffffff;
   }
