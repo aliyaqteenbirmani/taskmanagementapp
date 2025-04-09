@@ -30,9 +30,9 @@ namespace TaskManagementApp.Repositories.Implementations
             return await _context.Tasks.ToListAsync();
         }
 
-        public async Task<TaskItem> GetTaskById(Guid id)
+        public async Task<List<TaskItem>> GetTaskById(Guid id)
         {
-            return await _context.Tasks.FindAsync(id);
+            return await _context.Tasks.Where(t => t.UserId == id && !t.IsDeleted).ToListAsync();
         }
 
         public async Task UpdateTaskAsync(TaskItem task)

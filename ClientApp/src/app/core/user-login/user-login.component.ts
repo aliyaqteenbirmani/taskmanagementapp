@@ -28,8 +28,11 @@ export class UserLoginComponent {
     this.authService.login(this.loginData).subscribe({
       next: (response) => {
         console.log('Login successful', response);
-        // Assuming your backend returns a token or user data
-        // You might want to store the token in localStorage or a service
+        if(response.token){
+          localStorage.setItem('authToken',response.token);
+          localStorage.setItem("userName",response.name);
+        }
+        
         this.router.navigate(['/dashboard']); // Redirect to dashboard (or home)
       },
       error: (err) => {

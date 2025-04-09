@@ -25,22 +25,26 @@ namespace TaskManagementApp.Controllers
         [HttpPost("login-user")]
         public async Task<ActionResult<ResponseBody>> LoginUser(LoginDto loginDto)
         {
-            var userFromRepo = await _userService.GetUserByEmail(loginDto.Email);
-            if(userFromRepo is null)
+            try
             {
-                return Unauthorized("Invalid UserName");
-            }
-            var hmac = new HMACSHA256(Encoding.UTF8.GetBytes(userFromRepo.PasswordSalt));
-            var computedHashPass = hmac.ComputeHash(Encoding.UTF8.GetBytes(loginDto.Password)).ToString();
-            var token =  _tokenService.GenerateToken(userFromRepo);
-            var responseBody = new ResponseBody
-            {
-                Name = userFromRepo.FullName,
-                Token = token
-            };
+                var userFromRepo = await _userService.GetUserByEmail(loginDto.Email);
+                if (userFromRepo is null)
+                {
+                    return Unauthorized("Invalid UserName");
+                }
+                var hmac = new HMACSHA256(Encoding.UTF8.GetBytes(userFromRepo.PasswordSalt));
+                var computedHashPass = hmac.ComputeHash(Encoding.UTF8.GetBytes(loginDto.Password)).ToString();
+                var tokenString = _tokenService.GenerateToken(userFromRepo);
 
-            return userFromRepo.PasswordHash == computedHashPass ? 
-                Ok(responseBody) : BadRequest("Invalid Password");
+
+                return userFromRepo.PasswordHash == computedHashPass ?
+                    Ok(new {name = userFromRepo.FullName,token = tokenString}) : BadRequest("Invalid Password");
+
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { message = ex.Message });
+            }
         }
         [HttpPost("register-user")]
         public async Task<IActionResult> UserRegistration(UserDto userDto)
