@@ -13,11 +13,17 @@ export class TaskService {
   constructor(private http: HttpClient) { }
 
   getTasks(): Observable<TaskItem[]> {
-    const token = localStorage.getItem('authToken');
-    const headers = new HttpHeaders({
-      'Authorization': `Bearer ${token}`
-    });
+    const token = localStorage.getItem('authToken')?.trim();
+    if(!token)
+    {
+      console.error('No token found in localStorage');
+      throw new Error('No token found');
+    }
+    console.log('Raw token from localStorage:', token);
+    const headers = new HttpHeaders()
+    .set('Authorization',`Bearer ${token}`);
 
+    console.log('Authorization header:', headers.get('Authorization'));
     return this.http.get<TaskItem[]>(this.apiUrl,{headers});
   }
 }

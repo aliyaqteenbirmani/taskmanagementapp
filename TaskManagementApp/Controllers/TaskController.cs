@@ -1,6 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.IdentityModel.Tokens;
 using System.Security.Claims;
 using TaskManagementApp.Models;
 using TaskManagementApp.Repositories.Contracts;
@@ -37,19 +36,20 @@ namespace TaskManagementApp.Controllers
         }
 
         [HttpGet("get-task")]
+        [Authorize]
         public async Task<IActionResult> GetTasks()
         {
             try
             {
                 var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-
                 if(string.IsNullOrEmpty(userIdClaim))
                 {
-                    return Unauthorized(new { message = "User ID not found in token" });
+                    return Unauthorized(new { message = " User ID not found in token" });
                 }
 
-                var userID = Guid.Parse(userIdClaim);
-                var tasks = await _taskService.GetTaskById(userID);
+                Guid myGuid = Guid.Parse(userIdClaim);
+
+                var tasks = await _taskService.GetTaskById(myGuid);
                 return Ok(tasks);
             }
             catch (Exception ex)
