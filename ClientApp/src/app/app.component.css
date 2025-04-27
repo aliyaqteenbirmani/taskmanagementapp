@@ -1,23 +1,65 @@
-/* Apply the background to the entire app */
+/* Reset default styles and ensure full height */
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  font-family: 'Inter', sans-serif;
+}
+
+/* Main wrapper with gradient background */
 .app-wrapper {
-    background: linear-gradient(135deg, #adf1a4 0%, #093f16 100%); /* Warm gradient: peach to coral */
-    min-height: 100vh; /* Ensures the background covers the full viewport */
-    margin: 0; /* Removes default margin */
- 
-  }
-  
-  /* Optional: Style for any global elements like header/footer */
-  header{
-    background: transparent;
-    padding: 10px;
-    text-align: center;
-    color: #ffffff;
-    font-size: 40px;
+  background: linear-gradient(135deg, #1a3c34 0%, #a8dadc 100%); /* Deep teal to soft cyan */
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+}
+
+/* Header styling */
+.app-header {
+  background: transparent;
+  padding: 1.5rem;
+  text-align: center;
+}
+
+.app-header h1 {
+  margin: 0;
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: #ffffff;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+/* Main content area */
+.app-main {
+  flex: 1;
+  padding: 2rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Footer styling */
+.app-footer {
+  background: transparent;
+  padding: 1rem;
+  text-align: center;
+  color: #e0e0e0;
+  font-size: 0.9rem;
+}
+
+/* Responsive adjustments */
+@media (max-width: 576px) {
+  .app-header h1 {
+    font-size: 1.8rem;
   }
 
-  footer {
-    background: transparent;
-    padding: 10px;
-    text-align: center;
-    color: #ffffff;
+  .app-main {
+    padding: 1rem;
   }
+
+  .app-footer {
+    font-size: 0.8rem;
+  }
+}

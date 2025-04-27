@@ -1,0 +1,30 @@
+<div class="landing-page">
+  <section class="hero">
+    <h1 *ngIf="!isLoggedIn">Organize Your Tasks Effortlessly</h1>
+    <h1 *ngIf="isLoggedIn">Welcome Back, {{ userName }}!</h1>
+    <p *ngIf="!isLoggedIn">BitTask helps you manage your to-dos, set reminders, and stay on top of your daily activities.</p>
+    <p *ngIf="isLoggedIn">Ready to manage your tasks? Start organizing now.</p>
+    <div class="cta-buttons">
+      <button *ngIf="!isLoggedIn" routerLink="/login" class="btn btn-primary">Log In</button>
+      <button *ngIf="!isLoggedIn" routerLink="/register" class="btn btn-secondary">Sign Up</button>
+      <button *ngIf="isLoggedIn" (click)="logout()" class="btn btn-primary">Logout</button>
+    </div>
+  </section>
+  <section class="features" *ngIf="!isLoggedIn">
+    <h2>Key Features</h2>
+    <div class="feature-list">
+      <div class="feature">
+        <h3>Create and Manage Tasks</h3>
+        <p>Easily add, edit, and delete tasks to keep your to-do list up to date.</p>
+      </div>
+      <div class="feature">
+        <h3>Set Due Dates and Priorities</h3>
+        <p>Never miss a deadline by setting due dates and prioritizing your tasks.</p>
+      </div>
+      <div class="feature">
+        <h3>Track Your Progress</h3>
+        <p>Monitor your task completion with status updates and visual indicators.</p>
+      </div>
+    </div>
+  </section>
+</div>

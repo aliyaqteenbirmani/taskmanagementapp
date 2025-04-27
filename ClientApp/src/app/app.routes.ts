@@ -2,14 +2,15 @@ import { RouterModule, Routes } from '@angular/router';
 import { UserRegisterComponent } from './core/user-register/user-register.component';
 import { UserLoginComponent } from './core/user-login/user-login.component';
 import { NgModule } from '@angular/core';
-import { DashboardComponent } from './core/dashboard/dashboard.component';
+import { LandingComponent } from './core/landing/landing.component';
+import { TaskComponent } from './core/task/task.component';
 
 export const routes: Routes = [
-  { path: 'register', component: UserRegisterComponent }, 
+  { path: '', component: LandingComponent},  
   { path: 'login', component: UserLoginComponent},
-  { path: 'dashboard', component: DashboardComponent},
-  { path: '', redirectTo: '/login', pathMatch: 'full' },
-  { path: '**', redirectTo: '/login'}
+  { path: 'register', component: UserRegisterComponent }, 
+  { path: 'tasks', component: TaskComponent},
+  { path: '**', redirectTo:''}
 ];
 
 @NgModule({
@@ -17,4 +18,4 @@ export const routes: Routes = [
   exports: [RouterModule]
 })
 
-export class AppRoutingModule{}
+export class AppRoutingModule{} 

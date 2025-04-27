@@ -1,0 +1,153 @@
+<div class="tasks-page">
+  <!-- Notifications -->
+  <div class="notifications">
+    <div *ngFor="let notification of notifications" class="notification" [ngClass]="notification.type">
+      {{ notification.message }}
+    </div>
+  </div>
+
+  <!-- Profile Section -->
+  <div class="profile-section">
+    <div class="profile-info">
+      <div class="profile-pic-placeholder"></div>
+      <div class="profile-details">
+        <span class="profile-name">{{ userName }}</span>
+        <span class="profile-email">{{ userEmail }}</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Dashboard Overview -->
+  <div class="dashboard-overview">
+    <h2>Welcome, {{ userName }}!</h2>
+    <p class="motivation">Let’s get things done today!</p>
+    <div class="task-stats">
+      <div class="stat-card">
+        <span class="stat-label">New Tasks</span>
+        <span class="stat-value">{{ taskStats.new }}</span>
+      </div>
+      <div class="stat-card">
+        <span class="stat-label">In Progress</span>
+        <span class="stat-value">{{ taskStats.inProgress }}</span>
+      </div>
+      <div class="stat-card">
+        <span class="stat-label">Completed</span>
+        <span class="stat-value">{{ taskStats.completed }}</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Add/Edit Task Form -->
+  <div class="task-form">
+    <h3>{{ editingTask ? 'Edit Task' : 'Add New Task' }}</h3>
+    <form (ngSubmit)="editingTask ? updateTask() : addTask()">
+      <div class="form-group">
+        <label for="title">Title</label>
+        <input
+          type="text"
+          id="title"
+          class="form-control"
+          [ngModel]="editingTask ? editingTask.title : newTask.title"
+          (ngModelChange)="editingTask ? (editingTask.title = $event) : (newTask.title = $event)"
+          name="title"
+          required
+        />
+      </div>
+      <div class="form-group">
+        <label for="description">Description</label>
+        <textarea
+          id="description"
+          class="form-control"
+          [ngModel]="editingTask ? editingTask.description : newTask.description"
+          (ngModelChange)="editingTask ? (editingTask.description = $event) : (newTask.description = $event)"
+          name="description"
+        ></textarea>
+      </div>
+      <div class="form-group">
+        <label for="status">Status</label>
+        <select
+          id="status"
+          class="form-control"
+          [ngModel]="editingTask ? editingTask.status : newTask.status"
+          (ngModelChange)="updateStatus($event)"
+          name="status"
+        >
+          <option [ngValue]="taskStatus.New">New</option>
+          <option [ngValue]="taskStatus.InProgress">In Progress</option>
+          <option [ngValue]="taskStatus.Completed">Completed</option>
+        </select>
+      </div>
+      <div *ngIf="errorMessage" class="error-message">
+        {{ errorMessage }}
+      </div>
+      <button type="submit" class="btn btn-primary">
+        {{ editingTask ? 'Update Task' : 'Add Task' }}
+      </button>
+      <button
+        *ngIf="editingTask"
+        type="button"
+        class="btn btn-secondary"
+        (click)="editingTask = null; resetForm()"
+      >
+        Cancel
+      </button>
+    </form>
+  </div>
+
+  <!-- Task List with Filters -->
+  <div class="task-list">
+    <div class="task-controls">
+      <div class="filter-group">
+        <label for="filterStatus">Filter by Status:</label>
+        <select
+          id="filterStatus"
+          class="form-control"
+          [ngModel]="filterStatus"
+          (ngModelChange)="onFilterChange($event)"
+        >
+          <option value="All">All</option>
+          <option [ngValue]="taskStatus.New">New</option>
+          <option [ngValue]="taskStatus.InProgress">In Progress</option>
+          <option [ngValue]="taskStatus.Completed">Completed</option>
+        </select>
+      </div>
+      <div class="sort-group">
+        <label for="sortBy">Sort by:</label>
+        <select
+          id="sortBy"
+          class="form-control"
+          [ngModel]="sortBy"
+          (ngModelChange)="onSortChange($event)"
+        >
+          <option value="createdDate">Created Date</option>
+          <option value="modifiedDate">Modified Date</option>
+        </select>
+      </div>
+    </div>
+    <h3>Your Tasks</h3>
+    <div *ngIf="filteredTasks.length === 0" class="no-tasks">
+      No tasks found. Add a task to get started!
+    </div>
+    <div *ngFor="let task of filteredTasks" class="task-item" [ngClass]="{'completed': task.status === taskStatus.Completed}">
+      <div class="task-details">
+        <h4>{{ task.title }}</h4>
+        <p>{{ task.description || 'No description' }}</p>
+        <p>Status: {{ task.status === taskStatus.New ? 'New' : task.status === taskStatus.InProgress ? 'In Progress' : 'Completed' }}</p>
+        <p>Created: {{ task.createdDate | date:'medium' }}</p>
+        <p>Modified: {{ task.modifiedDate | date:'medium' }}</p>
+      </div>
+      <div class="task-actions">
+        <button class="btn btn-small btn-primary" (click)="toggleStatus(task)">
+          {{ task.status === taskStatus.New ? 'Start Progress' : task.status === taskStatus.InProgress ? 'Mark as Completed' : 'Reopen Task' }}
+        </button>
+        <button class="btn btn-small btn-secondary" (click)="editTask(task)">Edit</button>
+        <button class="btn btn-small btn-danger" (click)="deleteTask(task.id)">Delete</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Logout Button -->
+  <div class="logout">
+    <button class="btn btn-primary" (click)="logout()">Logout</button>
+  </div>
+</div>

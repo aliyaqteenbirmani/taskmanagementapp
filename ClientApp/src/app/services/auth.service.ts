@@ -24,12 +24,13 @@ export class AuthService {
   isAuthenticated(): boolean {
     // Check if a valid token exists in local storage (or wherever you're storing it)
     const token = localStorage.getItem('authToken');  // Replace 'authToken' with your actual token key
-    
-    // A simple check (you can implement more complex checks here)
-    if (token) {
-      return true;  // Token exists, consider the user authenticated
-    } else {
-      return false;  // No token, user is not authenticated
-    }
+    return !!token;
+  }
+
+  logout():void {
+    localStorage.removeItem('authToken');
+    localStorage.removeItem('userName');
+    localStorage.removeItem('userId');
+    localStorage.removeItem('userEmail');
   }
 }

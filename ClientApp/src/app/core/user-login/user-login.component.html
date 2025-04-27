@@ -1,9 +1,10 @@
-<div class="container">
-    <h2>Login</h2>
+<div class="login-container">
+  <div class="login-card">
+    <h2>Login to BitTask</h2>
     <form (ngSubmit)="loginUser()">
       <!-- Email -->
       <div class="form-group">
-        <label for="email">Email:</label>
+        <label for="email">Email</label>
         <input
           type="email"
           id="email"
@@ -12,12 +13,13 @@
           name="email"
           required
           aria-required="true"
+          placeholder="Enter your email"
         />
       </div>
-  
+
       <!-- Password -->
       <div class="form-group">
-        <label for="password">Password:</label>
+        <label for="password">Password</label>
         <input
           type="password"
           id="password"
@@ -26,14 +28,15 @@
           name="password"
           required
           aria-required="true"
+          placeholder="Enter your password"
         />
       </div>
-  
+
       <!-- Error Message -->
       <div *ngIf="errorMessage" class="error-message" role="alert">
         {{ errorMessage }}
       </div>
-  
+
       <!-- Submit Button -->
       <button
         type="submit"
@@ -43,9 +46,10 @@
         {{ isLoading ? 'Logging in...' : 'Login' }}
       </button>
     </form>
-  
+
     <!-- Link to Register -->
     <div class="register-link">
       <p>Don't have an account? <a [routerLink]="['/register']">Register here</a></p>
     </div>
   </div>
+</div>

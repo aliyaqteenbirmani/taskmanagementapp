@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using System.Security.Claims;
 using TaskManagementApp.Data;
 using TaskManagementApp.Models;
 using TaskManagementApp.Repositories.Contracts;
@@ -12,6 +13,7 @@ namespace TaskManagementApp.Repositories.Implementations
         {
             _context = context ?? throw new ArgumentNullException();
         }
+
         public async Task AddTaskAsync(TaskItem task)
         {
             await _context.AddAsync(task);
@@ -36,11 +38,12 @@ namespace TaskManagementApp.Repositories.Implementations
             return taskList;
         }
 
-        public async Task UpdateTaskAsync(TaskItem task)
+        public async Task<TaskItem> UpdateTaskAsync(TaskItem task)
         {
 
             _context.Entry(task).State = EntityState.Modified;
             await _context.SaveChangesAsync();
+            return await _context.Tasks.FindAsync(task.Id);
         }
     }
 }
